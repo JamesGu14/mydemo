@@ -56,6 +56,37 @@
         <% }) %>
         </tbody>
       </table>
+
+      <br><br>
+      <h2>Faces</h2>
+      <h5>Existing Faces</h5>
+      <br /><br />
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <td>ID</td>
+            <td>Faceset ID</td>
+            <td>Person Name</td>
+            <td>Token</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody class="table-striped">
+        <% faces.forEach(function(faces) { %>
+          <tr>
+            <td><%= faces.id %></td>
+            <td><%= faces.facesetId %></td>
+            <td><%= faces.title%></td>
+            <td><%= faces.token%></td>
+            <td>
+              <button class="btn btn-danger">Delete</button>
+              <button class="btn btn-warning">Edit</button>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+
     </div>
     
     <script src="/javascripts/jquery-3.3.1.min.js"></script>

@@ -15,7 +15,9 @@ router.get('/', function(req, res, next) {
   // }) 
 
   mysql.Faceset.findAll().then(facesets => {
-    res.render('system/index', { title: 'System', facesets: facesets })
+    mysql.Face.findAll().then(faces => {
+      res.render('system/index', { title: 'System', facesets: facesets, faces: faces })
+    })
   })
 })
 
