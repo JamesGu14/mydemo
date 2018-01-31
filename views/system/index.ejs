@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta charset='utf-8'>
+    <link rel="stylesheet" href='/stylesheets/bootstrap.min.css' type='text/css'>
+  </head>
+  <body>
+    <div style="margin: 50px">
+
+      <div style="width: 50%">
+        <h2>Upload Faces</h2>
+        <form name="addFaceForm" id="addFaceForm" action="">
+          <div class="form-group">
+            <label for="personName">Person Name</label>
+            <input type="text" class="form-control" id="personName" name="personName" placeholder="Enter Person Name">
+          </div>
+          <div class="form-group">
+            <label for="faceset">Faceset</label>
+            <input type="text" class="form-control" id="faceset" name="faceset" placeholder="Enter Faceset Token">
+          </div>
+          <div class="form-group">
+            <label for="avatar">Profile Picture</label>
+            <input type="file" class="form-control-file" id="avatar" name="avatar">
+          </div>
+          <input type="submit" class="btn btn-primary" value="Submit">
+        </form>
+      </div>
+      
+      <br><br>
+      <h2>Facesets</h2>
+      <h5>Existing Facesets</h5>
+      <br />
+      <button class="btn btn-primary">Add new faceset</button>
+      <br /><br />
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <td>ID</td>
+            <td>Faceset Name</td>
+            <td>Faceset Token</td>
+            <td>Actions</td>
+          </tr>
+        </thead>
+        <tbody class="table-striped">
+        <% facesets.forEach(function(faceset) { %>
+          <tr>
+            <td><%= faceset.id %></td>
+            <td><%= faceset.title%></td>
+            <td><%= faceset.token%></td>
+            <td>
+              <button class="btn btn-danger">Delete</button>
+              <button class="btn btn-warning">Edit</button>
+            </td>
+          </tr>
+        <% }) %>
+        </tbody>
+      </table>
+    </div>
+    
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $("form#addFaceForm").submit(function(e) {
+        e.preventDefault();    
+        var formData = new FormData(this);
+
+        $.ajax({
+            url: '/system/face',
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            error:function(err){
+              console.error(err);
+            },
+            success: function (data) {
+              alert(data)
+            },
+            complete:function(){
+                console.log("Request finished.");
+            }
+          });
+        });
+      })
+    </script>
+  </body>
+</html>
