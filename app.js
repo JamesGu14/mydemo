@@ -10,8 +10,12 @@ var users = require('./routes/users')
 var system = require('./routes/system')
 
 // Database section
-// const Face = require('./models/face')
+const Face = require('./models/face')
 // const Faceset = require('./models/faceset')
+// Face.create({
+//   token: '0365cfbeb37f3e1a54c15596e167a57d',
+//   title: 'Kara Cheng'
+// })
 // Faceset.sync()
 // Face.sync()
 

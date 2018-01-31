@@ -7,6 +7,8 @@ const API_SECRET = '-MLbCqXeAiGP6YHI1K7DHCO14DsF5pIL'
 const FACE_DETECT_URL = 'https://api-cn.faceplusplus.com/facepp/v3/detect'
 const GET_FACESET_URL = 'https://api-cn.faceplusplus.com/facepp/v3/faceset/getfacesets'
 const ADD_FACE_URL = 'https://api-cn.faceplusplus.com/facepp/v3/faceset/addface'
+const SEARCH_FACE_URL = 'https://api-cn.faceplusplus.com/facepp/v3/search'
+
 // const FACE_CHARACTER = ['gender','age','smiling','headpose','facequality','blur','eyestatus','emotion','ethnicity','beauty','mouthstatus','eyegaze','skinstatus']
 const FACE_CHARACTER = ['none']
 
@@ -26,8 +28,20 @@ let detectFace = (filepath, next) => {
   })
 }
 
-let searchFace = (next) => {
-
+let searchFace = (faceset_token, facetoken, next) => {
+  let formData = {
+    api_key: API_KEY,
+    api_secret: API_SECRET,
+    face_token: facetoken,
+    faceset_token: faceset_token
+  }
+  request.post({url: SEARCH_FACE_URL, formData: formData}, function(err, res, body) {
+    if (err === null && res.statusCode === 200) {
+      
+      let content = JSON.parse(body);
+      next(content)
+    }
+  })
 }
 
 let getFacesets = (next) => {

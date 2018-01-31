@@ -24,17 +24,17 @@ function startup() {
   photo = document.getElementById('photo');
   startbutton = document.getElementById('startbutton');
 
-  navigator.getMedia = ( navigator.getUserMedia ||
-                          navigator.webkitGetUserMedia ||
-                          navigator.mozGetUserMedia ||
-                          navigator.msGetUserMedia);
+  navigator.getMedia = (navigator.getUserMedia ||
+    navigator.webkitGetUserMedia ||
+    navigator.mozGetUserMedia ||
+    navigator.msGetUserMedia);
 
   navigator.getMedia(
     {
       video: true,
       audio: false
     },
-    function(stream) {
+    function (stream) {
       if (navigator.mozGetUserMedia) {
         video.mozSrcObject = stream;
       } else {
@@ -43,22 +43,22 @@ function startup() {
       }
       video.play();
     },
-    function(err) {
+    function (err) {
       console.log("An error occured! " + err);
     }
   );
 
-  video.addEventListener('canplay', function(ev){
+  video.addEventListener('canplay', function (ev) {
     if (!streaming) {
-      height = video.videoHeight / (video.videoWidth/width);
-    
+      height = video.videoHeight / (video.videoWidth / width);
+
       // Firefox currently has a bug where the height can't be read from
       // the video, so we will make assumptions if this happens.
-    
+
       if (isNaN(height)) {
-        height = width / (4/3);
+        height = width / (4 / 3);
       }
-    
+
       video.setAttribute('width', width);
       video.setAttribute('height', height);
       canvas.setAttribute('width', width);
@@ -67,11 +67,11 @@ function startup() {
     }
   }, false);
 
-  startbutton.addEventListener('click', function(ev){
+  startbutton.addEventListener('click', function (ev) {
     takepicture();
     ev.preventDefault();
   }, false);
-  
+
   clearphoto();
 }
 
@@ -99,7 +99,7 @@ function takepicture() {
     canvas.width = width;
     canvas.height = height;
     context.drawImage(video, 0, 0, width, height);
-  
+
     var data = canvas.toDataURL('image/png');
     photo.setAttribute('src', data);
     callApi(data)
@@ -109,7 +109,7 @@ function takepicture() {
 }
 
 function callApi(data) {
-  
+
   // Split the base64 string in data and contentType
   var block = data.split(";");
   // Get the content type
@@ -126,21 +126,18 @@ function callApi(data) {
 
   // Submit Form and upload file
   $.ajax({
-    url:"/image",
+    url: "/image",
     data: fd,// the formData function is available in almost all new browsers.
-    type:"POST",
-    contentType:false,
-    processData:false,
-    cache:false,
-    dataType:"json", // Change this according to your response from the server.
-    error:function(err){
-        console.error(err);
-    },
-    success:function(data){
-        console.log(data);
-    },
-    complete:function(){
-        console.log("Request finished.");
+    type: "POST",
+    contentType: false,
+    processData: false,
+    cache: false,
+    dataType: "json", // Change this according to your response from the server.
+  }).done(function (data) {
+    if (data.match) {
+      $('#notification').text(data.msg)
+    } else {
+      $('#notification').text('no one recognized')
     }
   });
 }
@@ -149,8 +146,8 @@ function callApi(data) {
 // once loading is complete.
 // window.addEventListener('load', startup, false);
 
-$(document).ready(function() {
-  $('#start').click(function() {
+$(document).ready(function () {
+  $('#start').click(function () {
     if (!started) {
       started = true
       startup()
@@ -165,7 +162,7 @@ $(document).ready(function() {
   //   }
   // }, 3000)
 
-  $('#upload-img').click(function() {
+  $('#upload-img').click(function () {
     takepicture();
   })
 })
@@ -187,18 +184,18 @@ function b64toBlob(b64Data, contentType, sliceSize) {
   var byteArrays = [];
 
   for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-      var slice = byteCharacters.slice(offset, offset + sliceSize);
+    var slice = byteCharacters.slice(offset, offset + sliceSize);
 
-      var byteNumbers = new Array(slice.length);
-      for (var i = 0; i < slice.length; i++) {
-          byteNumbers[i] = slice.charCodeAt(i);
-      }
+    var byteNumbers = new Array(slice.length);
+    for (var i = 0; i < slice.length; i++) {
+      byteNumbers[i] = slice.charCodeAt(i);
+    }
 
-      var byteArray = new Uint8Array(byteNumbers);
+    var byteArray = new Uint8Array(byteNumbers);
 
-      byteArrays.push(byteArray);
+    byteArrays.push(byteArray);
   }
 
-  var blob = new Blob(byteArrays, {type: contentType});
+  var blob = new Blob(byteArrays, { type: contentType });
   return blob;
 }
