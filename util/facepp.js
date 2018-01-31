@@ -6,7 +6,7 @@ const API_KEY = 'ZBGJP0FeHpWav70YBUvwhYBCadPczo9C'
 const API_SECRET = 'ieQjQ0H9d2n5PMm796HlqasWW-MnOLEX'
 const FACE_DETECT_URL = 'https://api-cn.faceplusplus.com/facepp/v3/detect'
 // const FACE_CHARACTER = ['gender','age','smiling','headpose','facequality','blur','eyestatus','emotion','ethnicity','beauty','mouthstatus','eyegaze','skinstatus']
-const FACE_CHARACTER = 'none'
+const FACE_CHARACTER = ['none']
 
 function invokeFaceDetectApi(fileName) {
   let formData = {
@@ -17,7 +17,9 @@ function invokeFaceDetectApi(fileName) {
   }
   request.post({url: FACE_DETECT_URL, formData: formData}, function(err, res, body) {
     if (err === null && res.statusCode === 200) {
-      // TODO: something for the body
+      
+      let content = JSON.parse(body);
+      return content.faces.length
     }
   })
 }

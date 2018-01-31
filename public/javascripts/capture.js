@@ -161,7 +161,7 @@ $(document).ready(function() {
 
   // setInterval(function() {
   //   if (started) {
-  //     // takepicture();
+  //      takepicture();
   //   }
   // }, 3000)
 
@@ -199,6 +199,6 @@ function b64toBlob(b64Data, contentType, sliceSize) {
       byteArrays.push(byteArray);
   }
 
-var blob = new Blob(byteArrays, {type: contentType});
-return blob;
+  var blob = new Blob(byteArrays, {type: contentType});
+  return blob;
 }
