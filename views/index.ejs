@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <meta charset='utf-8'>
+    <link rel="stylesheet" href="/stylesheets/main.css" type="text/css" media="all">
+    <link rel="stylesheet" href='/stylesheets/bootstrap.min.css' type='text/css'>
+  </head>
+  <body>
+    <div class="contentarea">
+      <p id="start">Start</p>
+      <p id="upload-img">Upload Image</p>
+      <div class="camera">
+        <video id="video">Video stream not available.</video>
+        <button id="startbutton" style="display:none">Take photo</button>
+      </div>
+      <canvas id="canvas">
+      </canvas>
+      <div class="output">
+        <img id="photo" alt="The screen capture will appear in this box."> 
+      </div>
+    </div>
+
+    <script src="/javascripts/jquery-3.3.1.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/capture.js"></script>
+  </body>
+</html>
