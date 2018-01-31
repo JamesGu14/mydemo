@@ -3,8 +3,7 @@ const request = require('request')
 const fs = require('fs')
 const uuidv1 = require('uuid/v1')
 
-
-var invokeFaceDetectApi = require('../util/facepp').invokeFaceDetectApi
+const facepp = require('../util/facepp')
 
 const router = express.Router()
 const multer = require('multer');
@@ -24,19 +23,16 @@ router.post('/image', upload.single('file'), function(req, res) {
 
   fs.rename(filepath, newpath, function(err) {
     if (err) throw err
-    let faceCount = invokeFaceDetectApi(newname)
-    if (faceCount > 0) {
-      console.log(faceCount + ' faces detected. ')
-
-      
-    }
+    facepp.detectFace(newpath, function(faces) {
+      console.log(faces.length + ' faces detected. ')
+    })
   })
 
   res.send('image received')
 })
 
 // router.get('/testapi', function(req, res) {
-//   invokeFaceDetectApi('img2.png')
+//   facepp.detectFace('img2.png')
 // })
 
 module.exports = router
