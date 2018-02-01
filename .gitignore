@@ -38,6 +38,9 @@ jspm_packages/
 
 # Images
 uploads/
+
+# VSCode Folder
+.vscode/
  
 # Typescript v1 declaration files
 typings/
