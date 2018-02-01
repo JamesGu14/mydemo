@@ -7,18 +7,32 @@
     <link rel="stylesheet" href='/stylesheets/bootstrap.min.css' type='text/css'>
   </head>
   <body>
-    <p id="notification"></p>
+    <br /><br /><br /><br />
+    <div id="container">
+      <div class="row">
+          <div class="col-md-8 offset-md-2" id="panel">
+            <br />
+            <p class="btn btn-primary" id="start">Start Monitoring</p>
+            <p class="btn btn-primary" id="upload-img">Detect</p>
+            <br /><br />
+            <h2 style="text-align: center">Welcome to PwC</h2>
+            <br /><br />
+            <div class="input-group input-group-lg">
+              <input type="text" class="form-control" aria-label="Large" aria-describedby="inputGroup-sizing-sm" id="notification" disabled>
+            </div>
+          </div>
+      </div>
+    </div>
+    
     <div class="contentarea">
-      <p id="start">Start</p>
-      <p id="upload-img">Upload Image</p>
       <div class="camera">
-        <video id="video">Video stream not available.</video>
+        <video id="video" style="display: none">Video stream not available.</video>
         <button id="startbutton" style="display:none">Take photo</button>
       </div>
       <canvas id="canvas">
       </canvas>
       <div class="output">
-        <img id="photo" alt="The screen capture will appear in this box."> 
+        <img id="photo" style="display: none" alt="The screen capture will appear in this box."> 
       </div>
     </div>
 

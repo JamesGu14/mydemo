@@ -29,27 +29,35 @@ router.post('/face', upload.single('avatar'), function(req, res, next) {
   let personName = req.body.personName
   let facesetTokenId = req.body.faceset
 
-  fs.rename(filepath, newpath, function(err) {
-    if (err) throw err
-    facepp.detectFace(newpath, function(faces) {
-      console.log(faces.length + ' faces detected. ')
-      if (faces.length == 1) {
-        // save to faceset
-        facepp.addFace(facesetToken, faces[0].face_token, function(success) {
-          if (success) {
-            // Save to DB
-            mysql.Face.create({
-              token: faces[0].face_token,
-              title: personName,
-              comment: newpath,
-              facesetId: facesetTokenId
-            })
-          }
-        })
-      }
+  mysql.Faceset.findOne({
+    where: {
+      id: facesetTokenId
+    }
+  }).then(faceset => {
+    if (faceset == null) {
+      return
+    }
+    fs.rename(filepath, newpath, function(err) {
+      if (err) throw err
+      facepp.detectFace(newpath, function(faces) {
+        console.log(faces.length + ' faces detected. ')
+        if (faces.length == 1) {
+          // save to faceset
+          facepp.addFace(faceset.token, faces[0].face_token, function(success) {
+            if (success) {
+              // Save to DB
+              mysql.Face.create({
+                token: faces[0].face_token,
+                title: personName,
+                comment: newpath,
+                facesetId: facesetTokenId
+              })
+            }
+          })
+        }
+      })
     })
   })
-
   res.send('image received')
 })
 

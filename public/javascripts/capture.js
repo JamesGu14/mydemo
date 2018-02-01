@@ -135,9 +135,9 @@ function callApi(data) {
     dataType: "json", // Change this according to your response from the server.
   }).done(function (data) {
     if (data.match) {
-      $('#notification').text(data.msg)
+      $('#notification').val(data.msg)
     } else {
-      $('#notification').text('no one recognized')
+      $('#notification').text('__')
     }
   });
 }
@@ -156,11 +156,11 @@ $(document).ready(function () {
     }
   })
 
-  // setInterval(function() {
-  //   if (started) {
-  //      takepicture();
-  //   }
-  // }, 3000)
+  setInterval(function() {
+    if (started) {
+       takepicture();
+    }
+  }, 3000)
 
   $('#upload-img').click(function () {
     takepicture();

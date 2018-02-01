@@ -17,6 +17,7 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 })
 
+/* Detect face and recognize */
 router.post('/image', upload.single('file'), function(req, res) {
   let filename = req.file.filename
   let filepath = req.file.path
@@ -65,7 +66,7 @@ router.post('/image', upload.single('file'), function(req, res) {
           if (names.length > 0) {
             res.json({
               match: true, 
-              msg: 'Welcome to PwC SDC Emerging Tech Lab, ' + names.join(', ') + '!'
+              msg: names.join(', ')
             })
           } else {
             res.json({

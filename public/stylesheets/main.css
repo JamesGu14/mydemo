@@ -45,3 +45,12 @@
   font-family: "Lucida Grande", "Arial", sans-serif;
   width: 760px;
 }
+
+#panel {
+  background-color: #f7f7f9;
+  min-height: 400px;
+}
+
+#notification {
+  text-align: center
+}
